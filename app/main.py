@@ -7,7 +7,7 @@ app = FastAPI(title="JuniorDebug API", version="1.0.0")
 
 # CORS middleware to allow frontend. Add `FRONTEND_URL` env var (no trailing slash)
 # when deploying to ensure the deployed frontend origin is allowed.
-default_origins = ["http://localhost:8080", "http://localhost:5173", "http://localhost:3000"]
+default_origins = ["http://localhost:8080", "http://localhost:5173", "http://localhost:3000","https://junior-debug-frontend.vercel.app"]
 
 # Always allow the known deployed frontend origin (Vercel). Also allow an
 # optional environment variable `FRONTEND_URL` / `VITE_FRONTEND_URL` or a
