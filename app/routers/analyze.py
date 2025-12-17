@@ -88,6 +88,7 @@ async def analyze_code(request: Request, req: AnalyzeRequest) -> AnalyzeResponse
         return response
 
     except ValueError as e:
+        print(f"ValueError: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
     except RuntimeError as e:
         msg = str(e).lower()
