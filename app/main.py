@@ -8,7 +8,7 @@ app = FastAPI(title="JuniorDebug API", version="1.0.0")
 # CORS middleware to allow frontend. Add `FRONTEND_URL` env var (no trailing slash)
 # when deploying to ensure the deployed frontend origin is allowed.
 default_origins = ["http://localhost:8080", "http://localhost:5173", "http://localhost:3000"]
-frontend_url = os.getenv("FRONTEND_URL")
+frontend_url = os.getenv("FRONTEND_URL") or os.getenv("VITE_FRONTEND_URL")
 if frontend_url:
     # strip trailing slash if present
     frontend_url = frontend_url.rstrip("/")
