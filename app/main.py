@@ -8,11 +8,29 @@ app = FastAPI(title="JuniorDebug API", version="1.0.0")
 # CORS middleware to allow frontend. Add `FRONTEND_URL` env var (no trailing slash)
 # when deploying to ensure the deployed frontend origin is allowed.
 default_origins = ["http://localhost:8080", "http://localhost:5173", "http://localhost:3000"]
+
+# Always allow the known deployed frontend origin (Vercel). Also allow an
+# optional environment variable `FRONTEND_URL` / `VITE_FRONTEND_URL` or a
+# comma-separated `ALLOWED_ORIGINS` list to customize environments.
+deployed_frontend = "https://junior-debug-frontend.vercel.app"
+if deployed_frontend not in default_origins:
+    default_origins.append(deployed_frontend)
+
+# Support both `FRONTEND_URL` (used by backend envs) and
+# `VITE_FRONTEND_URL` (used by the frontend/tooling) so deployed
+# frontends are correctly allowed by CORS.
 frontend_url = os.getenv("FRONTEND_URL") or os.getenv("VITE_FRONTEND_URL")
 if frontend_url:
-    # strip trailing slash if present
     frontend_url = frontend_url.rstrip("/")
-    default_origins.append(frontend_url)
+    if frontend_url not in default_origins:
+        default_origins.append(frontend_url)
+
+# Also support a comma-separated ALLOWED_ORIGINS env var for flexibility
+env_allowed = os.getenv("ALLOWED_ORIGINS")
+if env_allowed:
+    for o in [x.strip().rstrip("/") for x in env_allowed.split(",") if x.strip()]:
+        if o and o not in default_origins:
+            default_origins.append(o)
 
 app.add_middleware(
     CORSMiddleware,
