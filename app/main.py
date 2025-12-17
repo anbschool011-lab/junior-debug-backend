@@ -1,13 +1,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import analyze
+import os
 
 app = FastAPI(title="JuniorDebug API", version="1.0.0")
 
-# CORS middleware to allow frontend
+# CORS middleware to allow frontend. Add `FRONTEND_URL` env var (no trailing slash)
+# when deploying to ensure the deployed frontend origin is allowed.
+default_origins = ["http://localhost:8080", "http://localhost:5173", "http://localhost:3000"]
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    # strip trailing slash if present
+    frontend_url = frontend_url.rstrip("/")
+    default_origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080", "http://localhost:5173", "http://localhost:3000"],  # Vite dev server origins
+    allow_origins=default_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

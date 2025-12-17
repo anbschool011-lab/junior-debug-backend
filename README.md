@@ -73,3 +73,7 @@ Notes:
 
 - Render provides a `PORT` environment variable at runtime — the Procfile and `render.yaml` use `$PORT`.
 - For local testing we use `uvicorn` during development; Render uses Gunicorn with Uvicorn worker for production concurrency.
+
+Additional CORS note:
+
+- If your frontend is hosted on Vercel (or another host), set a `FRONTEND_URL` environment variable in Render to your frontend origin (for example `https://your-site.vercel.app`). The backend will allow requests from that origin. Do not include a trailing slash.
