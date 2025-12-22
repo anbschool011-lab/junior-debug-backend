@@ -49,11 +49,11 @@ Ensure the code is properly formatted and functional."""
     @staticmethod
     def _get_task_specific_instructions(task: TaskType) -> str:
         instructions = {
-            "debug": "Focus on finding and fixing syntax errors, logical bugs, and runtime issues.",
-            "refactor": "Improve variable names, function structure, and code organization.",
-            "debug-refactor": "First ensure the code works correctly, then make it cleaner and more maintainable.",
-            "performance": "Look for algorithmic improvements, reduce unnecessary operations, and optimize loops.",
-            "comments": "Add JSDoc/docstring comments, inline explanations, and usage examples."
+            "debug": "identify and fix bugs, syntax errors, and logical issues",
+            "refactor": "improve code structure, readability, and maintainability without changing functionality",
+            "debug-refactor": "first fix any bugs, then improve the code structure and readability",
+            "performance": "optimize the code for better performance while maintaining correctness",
+            "comments": "add comprehensive comments and documentation to explain the code"
         }
         return instructions[task]
     @staticmethod
