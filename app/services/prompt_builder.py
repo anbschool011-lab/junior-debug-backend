@@ -1,6 +1,14 @@
 from app.models.schemas import TaskType, Language
 
 class PromptBuilder:
+    TASK_DESCRIPTIONS = {
+        "debug": "identify bugs, syntax errors, and logical issues",
+        "refactor": "improve code structure, readability, and maintainability without changing functionality",
+        "debug-refactor": "first fix any bugs, then improve the code structure and readability",
+        "performance": "optimize the code for better performance while maintaining correctness",
+        "comments": "add comprehensive comments and documentation to explain the code"
+    }
+
     @staticmethod
     def build_prompt(code: str, task: TaskType, language: Language) -> str:
         base_prompt = f"""Act as a senior software engineer with extensive experience in {language} development.
@@ -37,25 +45,11 @@ Ensure the code is properly formatted and functional."""
 
     @staticmethod
     def _get_task_description(task: TaskType) -> str:
-        descriptions = {
-            "debug": "identify and fix bugs, syntax errors, and logical issues",
-            "refactor": "improve code structure, readability, and maintainability without changing functionality",
-            "debug-refactor": "first fix any bugs, then improve the code structure and readability",
-            "performance": "optimize the code for better performance while maintaining correctness",
-            "comments": "add comprehensive comments and documentation to explain the code"
-        }
-        return descriptions[task]
+        return PromptBuilder.TASK_DESCRIPTIONS[task]
 
     @staticmethod
     def _get_task_specific_instructions(task: TaskType) -> str:
-        instructions = {
-            "debug": "Focus on finding and fixing syntax errors, logical bugs, and runtime issues.",
-            "refactor": "Improve variable names, function structure, and code organization.",
-            "debug-refactor": "First ensure the code works correctly, then make it cleaner and more maintainable.",
-            "performance": "Look for algorithmic improvements, reduce unnecessary operations, and optimize loops.",
-            "comments": "Add JSDoc/docstring comments, inline explanations, and usage examples."
-        }
-        return instructions[task]
+        return PromptBuilder.TASK_DESCRIPTIONS[task]
     @staticmethod
     def map_description_to_task(description: str) -> TaskType | None:
         """Map a human-friendly task description to a TaskType.
