@@ -49,7 +49,18 @@ Ensure the code is properly formatted and functional."""
 
     @staticmethod
     def _get_task_specific_instructions(task: TaskType) -> str:
+<<<<<<< HEAD
         return PromptBuilder.TASK_DESCRIPTIONS[task]
+=======
+        instructions = {
+            "debug": "identify and fix bugs, syntax errors, and logical issues",
+            "refactor": "improve code structure, readability, and maintainability without changing functionality",
+            "debug-refactor": "first fix any bugs, then improve the code structure and readability",
+            "performance": "optimize the code for better performance while maintaining correctness",
+            "comments": "add comprehensive comments and documentation to explain the code"
+        }
+        return instructions[task]
+>>>>>>> cf7fb4a3ee2cd11301396065c6ce4156124c1d39
     @staticmethod
     def map_description_to_task(description: str) -> TaskType | None:
         """Map a human-friendly task description to a TaskType.
